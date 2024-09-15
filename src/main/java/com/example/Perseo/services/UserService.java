@@ -29,7 +29,7 @@ public class UserService {
     public User registerUser(RegisterRequest request) {
         User user = new User();
         user.setUsername(request.getUsername());
-        user.setPassword(request.getPassword()); // Asegúrate de encriptar la contraseña aquí
+        user.setPassword(request.getPassword()); // Contraseña en texto claro
         return userRepository.save(user);
     }
 

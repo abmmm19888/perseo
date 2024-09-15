@@ -1,6 +1,5 @@
 package com.example.Perseo.services;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.Perseo.dtos.AuthResponse;
@@ -14,19 +13,21 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final JwtService jwtService;
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, JwtService jwtService, BCryptPasswordEncoder passwordEncoder) {
+    public AuthService(UserRepository userRepository, JwtService jwtService) {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        // Aquí debes agregar la lógica de autenticación adecuada sin usar
+        // BCryptPasswordEncoder.
+        // Por ejemplo, si las contraseñas ya están en texto plano, compara las
+        // contraseñas directamente.
+        if (!request.getPassword().equals(user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
 
